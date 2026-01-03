@@ -38,12 +38,6 @@ export default function JustOneGame() {
     const answererName = urlParams.get('answerer');
     const playerName = urlParams.get('player');
     
-    // URLパラメータがない場合はホーム画面へ
-    if (!answererName && !playerName && typeof window !== 'undefined') {
-      router.push('/home');
-      return;
-    }
-    
     if (answererName) {
       setAnswerer(answererName);
     }
@@ -51,7 +45,7 @@ export default function JustOneGame() {
       // プレイヤー情報を保存（実際にはゲーム状態管理に使用）
       console.log(`現在のプレイヤー: ${playerName}, 回答者: ${answererName}`);
     }
-  }, [router]);
+  }, []);
 
   const getCurrentPlayer = () => {
     if (typeof window !== 'undefined') {
