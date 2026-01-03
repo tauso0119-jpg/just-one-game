@@ -16,12 +16,5 @@
 
 body {
   color: rgb(var(--foreground));
-  background: linear-gradient(
-      to bottom right,
-      from(rgb(112, 26, 86)),
-      from(rgb(145, 43, 108)),
-      from(rgb(219, 39, 119)),
-      to(rgb(251, 146, 60))
-    );
-  min-height: 100vh;
+  background: rgb(var(--background));
 }
