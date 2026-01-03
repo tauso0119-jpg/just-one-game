@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface Hint {
   id: number;
@@ -12,6 +13,7 @@ interface Hint {
 }
 
 export default function JustOneGame() {
+  const router = useRouter();
   const [topic, setTopic] = useState('東京タワー');
   const [answerer, setAnswerer] = useState('ほし'); // 回答者
   const [previousAnswerer, setPreviousAnswerer] = useState(''); // 前の回答者
@@ -30,22 +32,26 @@ export default function JustOneGame() {
   const [hintsPublished, setHintsPublished] = useState(false);
   const [gameEnded, setGameEnded] = useState(false);
 
-  // ホーム画面から回答者・プレイヤー情報を受け取る（実際にはlocalStorageやAPIで）
+  // トップページにアクセスしたらホーム画面にリダイレクト
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const urlParams = new URLSearchParams(window.location.search);
-      const answererName = urlParams.get('answerer');
-      const playerName = urlParams.get('player');
-      
-      if (answererName) {
-        setAnswerer(answererName);
-      }
-      if (playerName) {
-        // プレイヤー情報を保存（実際にはゲーム状態管理に使用）
-        console.log(`現在のプレイヤー: ${playerName}, 回答者: ${answererName}`);
-      }
+    const urlParams = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
+    const answererName = urlParams.get('answerer');
+    const playerName = urlParams.get('player');
+    
+    // URLパラメータがない場合はホーム画面へ
+    if (!answererName && !playerName && typeof window !== 'undefined') {
+      router.push('/home');
+      return;
     }
-  }, []);
+    
+    if (answererName) {
+      setAnswerer(answererName);
+    }
+    if (playerName) {
+      // プレイヤー情報を保存（実際にはゲーム状態管理に使用）
+      console.log(`現在のプレイヤー: ${playerName}, 回答者: ${answererName}`);
+    }
+  }, [router]);
 
   const getCurrentPlayer = () => {
     if (typeof window !== 'undefined') {
