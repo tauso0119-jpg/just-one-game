@@ -109,7 +109,7 @@ export default function Home() {
   const startGame = (memberName: string) => {
     if (memberName === currentAnswerer) {
       // 回答者の場合
-      window.location.href = `/?answerer=${currentAnswerer}&player=${memberName}`;
+      window.location.href = `/answerer?answerer=${currentAnswerer}&player=${memberName}`;
     } else {
       // プレイヤーの場合
       window.location.href = `/player?answerer=${currentAnswerer}&player=${memberName}`;
